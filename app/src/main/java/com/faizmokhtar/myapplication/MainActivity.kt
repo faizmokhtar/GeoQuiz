@@ -28,6 +28,7 @@ class MainActivity : AppCompatActivity() {
         Question(R.string.question_asia, true)
     )
     private var currentIndex = 0
+    private var totalScore = 0
 
     override fun onStart() {
         super.onStart()
@@ -111,10 +112,18 @@ class MainActivity : AppCompatActivity() {
     private fun checkAnswer(userAnswer: Boolean) {
         val correctAnswer = questionBank[currentIndex].answer
         val messageResId = if(userAnswer == correctAnswer) {
+            totalScore += 1
             R.string.correct_toast
         } else {
             R.string.false_toast
         }
-        Toast.makeText(this, messageResId, Toast.LENGTH_SHORT).show()
+
+        val totalQuestion = questionBank.size
+        if (currentIndex == totalQuestion - 1) {
+            val message = "You've scored $totalScore/$totalQuestion"
+            Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+        } else {
+            Toast.makeText(this, messageResId, Toast.LENGTH_SHORT).show()
+        }
     }
 }
