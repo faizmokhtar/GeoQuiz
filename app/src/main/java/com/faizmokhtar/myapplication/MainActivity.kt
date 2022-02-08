@@ -66,11 +66,15 @@ class MainActivity : AppCompatActivity() {
         nextButton = findViewById(R.id.next_button)
         questionTextView = findViewById(R.id.question_text_view)
 
-        trueButton.setOnClickListener { view: View ->
+        trueButton.setOnClickListener {
+            updateState(trueButton, false)
+            updateState(falseButton, false)
             checkAnswer(true)
         }
 
-        falseButton.setOnClickListener { view: View ->
+        falseButton.setOnClickListener {
+            updateState(trueButton, false)
+            updateState(falseButton, false)
             checkAnswer(false)
         }
 
@@ -92,7 +96,14 @@ class MainActivity : AppCompatActivity() {
         updateQuestion()
     }
 
+    private fun updateState(view: View, isEnabled: Boolean) {
+        view.isEnabled = isEnabled
+        view.isClickable = isEnabled
+    }
+
     private fun updateQuestion() {
+        updateState(trueButton, true)
+        updateState(falseButton, true)
         val questionTextResId = questionBank[currentIndex].textResId
         questionTextView.setText(questionTextResId)
     }
